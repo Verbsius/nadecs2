@@ -2,6 +2,7 @@
 
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+import Link from "next/link";
 
 export default async function NadeDetailPage({ params }) {
   const client = await clientPromise;
@@ -16,7 +17,7 @@ export default async function NadeDetailPage({ params }) {
 
   return (
     <main className="max-w-xl mx-auto p-4 space-y-4">
-      <a href="/nades" className="text-sm text-blue-500 hover:underline">← Back</a>
+      <Link href="/nades" className="text-sm text-blue-500 hover:underline">← Back</Link>
       <h1 className="text-2xl font-bold">{nade.map}: {nade.nadeName}</h1>
       {nade.videoUrl && (
         <div className="aspect-w-16 aspect-h-9">

@@ -12,12 +12,12 @@ export default async function NadeListPage() {
     <main className="max-w-3xl mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">NadeCS2</h1>
-        <a
+        <Link
           href="/nades"
           className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow"
         >
           Add Nade
-        </a>
+        </Link>
       </div>
 
       <div className="grid gap-4">
