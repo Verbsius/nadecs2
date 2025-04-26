@@ -6,7 +6,8 @@ export const dynamic = "force-dynamic";
 export default async function NadeListPage() {
   const client = await clientPromise;
   const db = client.db("nade_share");
-  const nades = await db.collection("nade_share").find().toArray();
+  const nades = await db.collection("nade_share").find().sort({ _id: -1 }).toArray();
+
 
   return (
     <main className="max-w-3xl mx-auto p-6">
