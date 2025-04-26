@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 
 export default function CommentSection({ nadeId }) {
+  const [username, setUsername] = useState("");
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
 
@@ -17,13 +18,17 @@ export default function CommentSection({ nadeId }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!comment.trim()) return;
+    if (!comment.trim() || !username.trim()) {
+      alert("both username and comment are required");
+      return;
+    }
     await fetch("/api/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: nadeId, text: comment })
+      body: JSON.stringify({ id: nadeId, username, text: comment })
     });
     setComment("");
+    setUsername("");
     
     const res = await fetch(`/api/nades/${nadeId}`);
     const data = await res.json();
@@ -34,6 +39,13 @@ export default function CommentSection({ nadeId }) {
     <section className="mt-8">
       <h2 className="text-lg font-semibold mb-2">Comments</h2>
       <form onSubmit={handleSubmit} className="space-y-2">
+        <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Your username"
+            className="w-full border rounded p-2"
+        />
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
@@ -53,7 +65,7 @@ export default function CommentSection({ nadeId }) {
       <div className="mt-4 space-y-2">
         {comments.map((c, idx) => (
           <div key={idx} className="border p-2 rounded">
-            <p>{c.text}</p>
+             <p><strong>{c.username || "Anonymous"}:</strong> {c.text}</p>
             <p className="text-xs text-gray-500">{new Date(c.createdAt).toLocaleString()}</p>
           </div>
         ))}

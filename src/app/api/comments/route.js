@@ -1,8 +1,14 @@
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+import { use } from "react";
 
 export async function POST(req) {
-  const { id, text } = await req.json();
+  const { id, username, text } = await req.json();
+
+  if (!id || !username || !text) {
+    return new Response(JSON.stringify({ error: "id, username, and text are required" }), { status: 400 });
+  }
+  
   const client = await clientPromise;
   const db = client.db("nade_share");
 
@@ -11,6 +17,7 @@ export async function POST(req) {
     {
       $push: {
         comments: {
+          username,
           text,
           createdAt: new Date()
         }

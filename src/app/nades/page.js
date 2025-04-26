@@ -24,7 +24,7 @@ export default function NadeFormPage() {
             return;
           }
 
-          const res = await fetch("/api/nade", {
+          const res = await fetch("/api/nades", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -38,7 +38,6 @@ export default function NadeFormPage() {
           }
         }}
       >
-        {/* Logo */}
         {/* Map Selector */}
         <label className="block">
           <span className="block font-medium">Map:</span>
